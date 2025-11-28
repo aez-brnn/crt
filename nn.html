@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+<style>
+    body {
+        background: #6ae0ff;
+        font-family: Arial, sans-serif;
+        text-align: center;
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin: 0;
+        flex-direction: column;
+    }
+
+    h1 {
+        font-size: 32px;
+        margin-bottom: 20px;
+    }
+
+    .button-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        position: relative;
+    }
+
+    button {
+        padding: 15px 30px;
+        font-size: 24px;
+        border-radius: 10px;
+        border: none;
+        cursor: pointer;
+        margin: 10px;
+        transition: 0.3s ease;
+    }
+
+    #yesBtn {
+        background: #ff6afc; /* pink */
+        color: white;
+        z-index: 10;
+        position: relative;
+    }
+
+    #noBtn {
+        background: #ff001f; /* red */
+        border: 2px solid #ff1a1a;
+        color: white;
+        position: relative;
+        z-index: 20;
+    }
+
+    .gif_container img {
+        width: 300px;
+        border-radius: 12px;
+    }
+
+    #yesPage {
+        display: none;
+    }
+
+    .header_text {
+        font-size: 36px;
+        margin-bottom: 20px;
+        color: #ffffff;
+        text-shadow: 2px 2px 5px rgba(0,0,0,0.2);
+    }
+</style>
+</head>
+<body>
+
+<!-- FIRST PART -->
+<div id="main">
+    <h1>Pwede ka bang ligawan?</h1>
+
+    <div class="button-container">
+        <button id="yesBtn" onclick="handleYes()">Pwede naman</button>
+        <button id="noBtn" onclick="noClicked()">Bawal eh</button>
+    </div>
+
+    <div class="gif_container">
+    </div>
+</div>
+
+<!-- LAST PART -->
+<div class="container gif_container" id="yesPage">
+    <h1 class="header_text">knew you would say yes</h1>
+    <div class="gif_container">
+        <img src="https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExbW5lenZyZHI5OXM2eW95b3pmMG40cWVrMDhtNjVuM3A4dGNxa2g2dSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9cw/VM1fcpu2bKs1e2Kdbj/giphy.gif"alt="Final GIF">
+    </div>
+</div>
+
+<script>
+let index = 0;
+
+const messages = [
+    "Sigurado ka?",
+    "tunay??",
+    "pumayag kana, please...",
+    "pumayag ka nalang",
+    "If you don't, I will be really sad...",
+    "I will be very very very sad...",
+    "Just kidding, pumayag ka nalang!",                    
+    "    "
+];
+
+function noClicked() {
+    const yesBtn = document.getElementById("yesBtn");
+    const noBtn = document.getElementById("noBtn");
+    const container = document.querySelector(".button-container");
+
+    container.appendChild(noBtn); // Move NO under YES
+
+    if (index < messages.length - 1) {
+        noBtn.innerText = messages[index];
+        index++;
+
+        yesBtn.style.transform = `scale(${1 + index * 0.25})`;
+        noBtn.style.zIndex = "999";
+    } else {
+        // Final "Just kidding..." message → YES covers NO, NO disappears
+        yesBtn.style.transition = "0.5s ease-in-out";
+        yesBtn.style.transform = "scale(4)";
+        noBtn.style.display = "none";
+
+        // Only YES clickable now
+        yesBtn.onclick = handleYes;
+    }
+}
+
+function handleYes() {
+    document.getElementById("main").style.display = "none";
+    document.getElementById("yesPage").style.display = "block";
+}
+</script>
+
+</body>
+</html>
